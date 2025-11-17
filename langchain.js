@@ -7,8 +7,8 @@ dotenv.config({path:"./.env"})
 
 const testSchema = z.object({
     name: z.string().describe("Person name mentioned in the statement"),
-    price: z.number().describe("Price in USD mentioned in the statement"),
-    starRating: z.number().describe("Rating mentioned in fraction or decimal or number or string")
+    price: z.number().describe("Price in USD mentioned in the statement. Eg: $47, USD 47, $99.99"),
+    starRating: z.number().describe("Rating mentioned in fraction or decimal or positive integer or string. Eg: 4 1/2, 4.5, four")
 })
 
 const model = new ChatOpenAI({
@@ -29,4 +29,3 @@ const chain = prompt.pipe(model).pipe(parser);
 const response =  await chain.invoke({input:"BrightLens 4K Projector approximtely $349, rated 4/5 stars", "format_instructions": parser.getFormatInstructions()})
 
 console.log(response);
-
